@@ -1,10 +1,7 @@
 use actix_web::{get, HttpRequest, HttpResponse, post, Responder, cookie::Cookie, web};
 use askama::Template;
 use serde::{Deserialize, Serialize};
-
-#[derive(Template)]
-#[template(path = "auth/login.html")]
-pub struct LoginParams;
+use crate::routes::auth::AuthTemplate;
 
 #[derive(Serialize, Deserialize)]
 struct LoginForm {
@@ -14,7 +11,10 @@ struct LoginForm {
 
 #[get("/login")]
 pub async fn login_get(_: HttpRequest) -> impl Responder {
-    HttpResponse::Ok().body(LoginParams.render().unwrap())
+    let mut page = AuthTemplate::new("/auth/login", "Login");
+    page.add_element("Username", "text", Some("username"));
+    page.add_element("Password", "password", Some("password"));
+    HttpResponse::Ok().body(page.render().unwrap())
 }
 
 #[post("/login")]
