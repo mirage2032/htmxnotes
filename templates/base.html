@@ -2,16 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="author" content="Popescu Ionut-Alexandru">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>{% block title %}Notes{% endblock %}</title>
     <link href="/static/css/base.css" rel="stylesheet">
     <link href="/static/css/tailwind.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+    </style>
+
+    <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"-->
+    <!--          integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="-->
+    <!--          crossorigin="anonymous" referrerpolicy="no-referrer"/>-->
     <script crossorigin="anonymous"
             integrity="sha384-0gxUXCCR8yv9FM2b+U3FDbsKthCI66oH5IA9fHppQq9DDMHuMauqq1ZHBpJxQ0J0"
             src="https://unpkg.com/htmx.org@1.9.11"></script>
     {% block head %}{% endblock %}
 </head>
-<body>
+<body class="h-screen w-screen">
 {% block content %}{% endblock %}
 </body>
 </html>

@@ -1,5 +1,25 @@
 {% extends "base.html" %}
-
+{% block head %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+</style>
+<link href="/static/css/index.css" rel="stylesheet">
+{% endblock %}
 {% block content %}
-<p class="text-3xl">Hi, {{ name }}!</p>
+<div class="w-full h-full flex flex-col items-center justify-between pacifico-regular">
+    <span></span>
+    <div>
+        <h1 class="text-7xl work-sans">HTMXNotes</h1>
+    </div>
+    <div class="flex flex-col items-center">
+        <div class="flex justify-between">
+            <a class="main-button text-2xl" href="/auth/login">Login</a>
+            <a class="main-button text-2xl" href="/auth/register">Register</a>
+        </div>
+        <div>
+            <a class="main-button text-2xl" href="/notes/create">Write note</a>
+        </div>
+    </div>
+    <span></span>
+</div>
 {% endblock %}
