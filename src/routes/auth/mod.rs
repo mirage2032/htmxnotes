@@ -3,6 +3,7 @@ use askama::Template;
 
 mod login;
 mod register;
+mod logout;
 
 pub struct FormElement<'a> {
     pub label: &'a str,
@@ -40,4 +41,5 @@ pub fn auth_routes(cfg: &mut web::ServiceConfig) {
     cfg.service(login::login_post);
     cfg.service(register::register_get);
     cfg.service(register::register_post);
+    cfg.service(logout::logout_get);
 }

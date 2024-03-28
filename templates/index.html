@@ -13,8 +13,13 @@
     </div>
     <div class="flex flex-col items-center">
         <div class="flex justify-between">
+            {% match username %}
+            {% when Some with (username) %}
+            <a class="main-button text-2xl" href="/auth/logout">Logout</a>
+            {% when None %}
             <a class="main-button text-2xl" href="/auth/login">Login</a>
             <a class="main-button text-2xl" href="/auth/register">Register</a>
+            {% endmatch %}
         </div>
         <div>
             <a class="main-button text-2xl" href="/notes/create">Write note</a>

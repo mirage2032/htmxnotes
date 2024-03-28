@@ -1,13 +1,6 @@
 use actix_web::{body::MessageBody, dev::{ServiceRequest, ServiceResponse}, Error};
 use actix_web::dev::Service;
-use actix_web::http::header;
-use actix_web::http::header::HeaderValue;
-use serde::{Deserialize, Serialize};
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct SessionCookie {
-    pub token: String,
-}
+use actix_web::http::header::{self, HeaderValue};
 
 pub async fn nocache(
     req: ServiceRequest,

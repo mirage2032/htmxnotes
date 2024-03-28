@@ -1,15 +1,14 @@
 use actix_web::{HttpMessage, HttpRequest, HttpResponse, Responder};
 use askama::Template;
-use crate::middleware::auth::SessionCookie;
+use crate::db::users::User;
 
 #[derive(Template)]
 #[template(path = "index.html")]
-pub struct IndexParams;
+pub struct IndexParams{
+    username: Option<String>,
+}
 
 pub async fn index(req: HttpRequest) -> impl Responder {
-    let extensions = req.extensions();
-    if let Some(cookie) = extensions.get::<SessionCookie>() {
-        println!("Token: {}", cookie.token);
-    }
-    HttpResponse::Ok().body(IndexParams.render().unwrap())
+    let username = req.extensions().get::<User>().map(|u| u.username.clone());
+    HttpResponse::Ok().body(IndexParams{username}.render().unwrap())
 }
