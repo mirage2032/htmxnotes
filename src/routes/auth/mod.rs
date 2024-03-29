@@ -2,8 +2,8 @@ use actix_web::web;
 use askama::Template;
 
 mod login;
-mod register;
 mod logout;
+mod register;
 
 pub struct FormElement<'a> {
     pub label: &'a str,

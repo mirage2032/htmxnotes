@@ -1,11 +1,15 @@
-use actix_web::{body::MessageBody, dev::{ServiceRequest, ServiceResponse}, Error};
 use actix_web::dev::Service;
 use actix_web::http::header::{self, HeaderValue};
+use actix_web::{
+    body::BoxBody,
+    dev::{ServiceRequest, ServiceResponse},
+    Error,
+};
 
 pub async fn nocache(
     req: ServiceRequest,
-    next: impl Service<ServiceRequest, Response=ServiceResponse, Error=Error>,
-) -> Result<ServiceResponse<impl MessageBody>, Error> {
+    next: impl Service<ServiceRequest, Response = ServiceResponse, Error = Error>,
+) -> Result<ServiceResponse<BoxBody>, Error> {
     let mut response = next.call(req).await?;
     response.headers_mut().insert(
         header::CACHE_CONTROL,

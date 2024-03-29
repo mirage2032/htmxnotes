@@ -1,13 +1,12 @@
-pub mod users;
 pub mod sessions;
+pub mod users;
 
-use thiserror::Error;
-use diesel::result;
 use diesel::pg::PgConnection;
-use diesel::r2d2::{self,ConnectionManager, Pool};
+use diesel::r2d2::{self, ConnectionManager, Pool};
+use diesel::result;
 use dotenv::dotenv;
 use std::env;
-
+use thiserror::Error;
 
 pub type DBPool = Pool<ConnectionManager<PgConnection>>;
 
@@ -22,7 +21,7 @@ pub enum DBError {
     #[error("Internal error {0}")]
     InternalErr(String),
 }
-pub type DBResult<T> = Result<T,DBError>;
+pub type DBResult<T> = Result<T, DBError>;
 
 // Initialize a database connection pool during application startup
 pub fn create_pool() -> DBPool {
@@ -36,7 +35,7 @@ pub fn create_pool() -> DBPool {
     let full_url = format!(
         "postgres://{}:{}@{}:{}/{}",
         username, password, host, port, dbname
-    );    
+    );
     let manager = ConnectionManager::<PgConnection>::new(full_url);
     Pool::builder()
         .max_size(5)

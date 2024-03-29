@@ -7,9 +7,9 @@ use super::needs_rebuild;
 fn is_stylesheet(path: &Path) -> bool {
     let suffixes = ["scss", "sass", "css"];
     if let Some(extension) = path.extension() {
-        return suffixes.iter().any(
-            |suffix| extension.to_str().unwrap() == *suffix
-        );
+        return suffixes
+            .iter()
+            .any(|suffix| extension.to_str().unwrap() == *suffix);
     }
     false
 }
@@ -27,7 +27,9 @@ pub fn compile(src_dir: &Path, dest_dir: &Path) {
         let source_path = entry.path();
         if source_path.is_file() && is_stylesheet(source_path) {
             let mut destination_path = PathBuf::from(dest_dir);
-            let relative_path = source_path.strip_prefix(src_dir).expect("Failed to strip prefix");
+            let relative_path = source_path
+                .strip_prefix(src_dir)
+                .expect("Failed to strip prefix");
             destination_path.push(relative_path);
             destination_path.set_extension("css");
             if !needs_rebuild(source_path, &destination_path) {
@@ -35,13 +37,17 @@ pub fn compile(src_dir: &Path, dest_dir: &Path) {
                 continue;
             }
             println!("Compiling: {}", source_path.display());
-            let path_str = source_path.to_str().expect("Failed to convert path to string");
-            let css = grass::from_path(path_str, &grass::Options::default()).expect("Failed to compile");
+            let path_str = source_path
+                .to_str()
+                .expect("Failed to convert path to string");
+            let css =
+                grass::from_path(path_str, &grass::Options::default()).expect("Failed to compile");
             if css.is_empty() {
                 println!("Skipping as it did not result in any css");
                 continue;
             }
-            std::fs::create_dir_all(destination_path.parent().expect("Failed to get parent")).expect("Failed to create directory");
+            std::fs::create_dir_all(destination_path.parent().expect("Failed to get parent"))
+                .expect("Failed to create directory");
             std::fs::write(destination_path, css).expect("Failed to write file");
         }
     }

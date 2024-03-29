@@ -1,7 +1,7 @@
-use std::path::Path;
-use std::fs;
-use std::time::SystemTime;
 use std::env;
+use std::fs;
+use std::path::Path;
+use std::time::SystemTime;
 
 pub mod sass;
 pub mod tailwinds;
@@ -9,16 +9,24 @@ pub mod tailwinds;
 use lazy_static::lazy_static;
 
 lazy_static! {
-    static ref BIN_TIMESTAMP: Option<SystemTime>  = {
+    static ref BIN_TIMESTAMP: Option<SystemTime> = {
         let out_dir_string = env::var("OUT_DIR").expect("Failed to get OUT_DIR");
         let out_dir = Path::new(&out_dir_string);
-        let build_dir = out_dir.parent().unwrap().parent().unwrap().parent().unwrap();
+        let build_dir = out_dir
+            .parent()
+            .unwrap()
+            .parent()
+            .unwrap()
+            .parent()
+            .unwrap();
         let filename = env::var("CARGO_PKG_NAME").expect("Failed to get CARGO_BIN_NAME");
         let mut bin_path = build_dir.join(filename);
         if env::var("CARGO_CFG_WINDOWS").is_ok() {
             bin_path.set_extension("exe");
         }
-        fs::metadata(&bin_path).ok().map(|m| m.modified().expect("Failed to get modified time"))
+        fs::metadata(&bin_path)
+            .ok()
+            .map(|m| m.modified().expect("Failed to get modified time"))
     };
 }
 
