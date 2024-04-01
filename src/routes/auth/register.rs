@@ -31,11 +31,13 @@ pub async fn register_post(
     form: web::Form<RegisterForm>,
 ) -> impl Responder {
     let conn = dbpool.as_ref();
-    let newuser = NewUser::new(&form.username, &form.email, &form.password);
-    if newuser.is_err() {
-        return HttpResponse::BadRequest().body("Invalid form data!");
-    }
-    match User::create(conn, newuser.unwrap()) {
+    let newuser = match NewUser::new(&form.username, &form.email, &form.password) {
+        Ok(user) => user,
+        Err(err) => {
+            return HttpResponse::BadRequest().body(format!("Invalid form data!: {}",err));
+        }
+    };
+    match User::create(conn, newuser) {
         Ok(user) => {
             match user.create_session(conn, Duration::from_secs(60 * 60 * 24 * 2)) {
                 Ok(token) => {
