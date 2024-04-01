@@ -1,5 +1,6 @@
 .idea
 .vscode
 migrations
-/target
-/static/css
+target
+static/css
+db/data

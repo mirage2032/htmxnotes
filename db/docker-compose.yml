@@ -2,10 +2,6 @@ version: '3.9'
 services:
   db-container:
     image: postgres
-    # healthcheck:
-    #   test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-ptoor"]
-    #   interval: 5s
-    #   retries: 10
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
@@ -15,4 +11,4 @@ services:
       - "5432:5432"
     volumes:
       - ./initdb:/docker-entrypoint-initdb.d
-      - ./data:/var/lib/mysql
+      - ./data:/var/lib/postgresql/data
